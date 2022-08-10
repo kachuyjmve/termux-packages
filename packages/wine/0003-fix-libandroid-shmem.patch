@@ -1,0 +1,8 @@
+diff -uNr wine-5.1/dlls/winex11.drv/Makefile.in wine-5.1.mod/dlls/winex11.drv/Makefile.in
+--- wine-5.1/dlls/winex11.drv/Makefile.in	2020-02-03 02:55:00.000000000 +0800
++++ wine-5.1.mod/dlls/winex11.drv/Makefile.in	2022-08-10 19:16:51.132201107 +0800
+@@ -33,3 +33,4 @@
+ 	xvidmode.c
+ 
+ RC_SRCS = version.rc
++LDFLAGS = -landroid-shmem
