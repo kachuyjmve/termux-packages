@@ -10,7 +10,7 @@ TERMUX_PKG_MAINTAINER="@termux"
 TERMUX_PKG_DEPENDS="ncurses, libpng, libjpeg-turbo, libx11, xorg-util-macros, libxaw, libxt, libxml2, libxslt, freetype"
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="--with-x --without-pcap"
 TERMUX_PKG_HOSTBUILD=true
-TERMUX_PKG_EXTRA_HOSTBUILD_CONFIGURE_ARGS="--with-x --without-mingw32, --disable-nls"
+TERMUX_PKG_EXTRA_HOSTBUILD_CONFIGURE_ARGS="--with-x, --disable-nls"
 
 termux_step_host_build () {
    $TERMUX_PKG_SRCDIR/configure ${TERMUX_PKG_EXTRA_HOSTBUILD_CONFIGURE_ARGS}
