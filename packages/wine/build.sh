@@ -8,10 +8,9 @@ TERMUX_PKG_LICENSE="custom"
 TERMUX_PKG_LICENSE_FILE="LICENSE, COPYING-LIB"
 TERMUX_PKG_MAINTAINER="@termux"
 TERMUX_PKG_DEPENDS="ncurses, libpng, libjpeg-turbo, libx11, xorg-util-macros, libxaw, libxt, libxml2, libxslt, libandroid-shmem, libandroid-shmem-static, freetype, freetype-static"
-TERMUX_PKG_EXTRA_CONFIGURE_ARGS="--with-x --without-pcap"
 TERMUX_PKG_HOSTBUILD=true
 
 termux_step_host_build () {
-   $TERMUX_PKG_SRCDIR/configure --without-x --disable-nls --without-pcap --with-freetype --disable-tests
+   $TERMUX_PKG_SRCDIR/configure --without-x --disable-nls --without-pcap --with-freetype=$TERMUX_PREFIX/include/freetype2 --disable-tests
    make -j8
 }
