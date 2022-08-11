@@ -1,157 +1,54 @@
-diff -uNr a/dlls/crypt32/unixlib.c b/dlls/crypt32/unixlib.c
---- a/dlls/crypt32/unixlib.c
-+++ b/dlls/crypt32/unixlib.c
-@@ -619,6 +619,7 @@
-  "/usr/local/share/certs/",
-  "/etc/sfw/openssl/certs",
-  "/etc/security/cacerts",  /* Android */
-+ "@TERMUX_PREFIX@/etc/tls" /* Termux */
- };
+diff -uNr wine-5.1/dlls/dbghelp/macho_module.c wine-5.1.mod/dlls/dbghelp/macho_module.c
+--- wine-5.1/dlls/dbghelp/macho_module.c	2020-02-03 02:55:00.000000000 +0800
++++ wine-5.1.mod/dlls/dbghelp/macho_module.c	2022-08-11 12:33:34.801987703 +0800
+@@ -1411,13 +1411,13 @@
+             struct nlist nl[2];
+             memset(nl, 0, sizeof(nl));
+             nl[0].n_un.n_name = (char*)"_dyld_all_image_infos";
+-            if (!nlist("/usr/lib/dyld", nl))
++            if (!nlist("@TERMUX_PREFIX@/lib/dyld", nl))
+                 dyld_all_image_infos_addr = (void*)nl[0].n_value;
+         }
  
- static void load_root_certs(void)
-diff -uNr a/dlls/dbghelp/macho_module.c b/dlls/dbghelp/macho_module.c
---- a/dlls/dbghelp/macho_module.c
-+++ b/dlls/dbghelp/macho_module.c
-@@ -1578,7 +1578,7 @@
+         if (dyld_all_image_infos_addr)
+         {
+-            TRACE("got dyld_image_info_address %p from /usr/lib/dyld symbol table\n",
++            TRACE("got dyld_image_info_address %p from @TERMUX_PREFIX@/lib/dyld symbol table\n",
+                   dyld_all_image_infos_addr);
+             dyld_image_info_address = (ULONG_PTR)dyld_all_image_infos_addr;
+         }
+@@ -1647,7 +1647,7 @@
      {
-         const WCHAR* fallback = process_getenv(pcs, L"DYLD_FALLBACK_LIBRARY_PATH");
+         const char* fallback = getenv("DYLD_FALLBACK_LIBRARY_PATH");
          if (!fallback)
--            fallback = L"/usr/local/lib:/lib:/usr/lib";
-+            fallback = L"@TERMUX_PREFIX@/lib:/usr/local/lib:/lib:/usr/lib";
-         ret = search_unix_path(p, fallback, macho_load_file_cb, &load_params);
+-            fallback = "/usr/local/lib:/lib:/usr/lib";
++            fallback = "@TERMUX_PREFIX@/lib";
+         ret = macho_load_file_from_path(pcs, p, load_addr, fallback, macho_info);
      }
-     if (!ret && p == filename)
-diff -uNr a/dlls/dbghelp/module.c b/dlls/dbghelp/module.c
---- a/dlls/dbghelp/module.c
-+++ b/dlls/dbghelp/module.c
-@@ -701,7 +701,7 @@
-                 if (!ret)
-                 {
-                     dst = HeapAlloc(GetProcessHeap(), 0,
--                                    sizeof(L"/usr/lib/debug/.build-id/") + (3 + filename_len + idlen * 2) * sizeof(WCHAR));
-+                                    sizeof(L"@TERMUX_PREFIX@/lib/debug/.build-id/") + (3 + filename_len + idlen * 2) * sizeof(WCHAR));
-                     if (dst)
-                     {
-                         WCHAR* p;
-@@ -711,7 +711,7 @@
-                          * where the alternate file is...
-                          * so try both
-                          */
--                        p = memcpy(dst, L"/usr/lib/debug/.build-id/", sizeof(L"/usr/lib/debug/.build-id/"));
-+                        p = memcpy(dst, L"@TERMUX_PREFIX@/lib/debug/.build-id/", sizeof(L"@TERMUX_PREFIX@/lib/debug/.build-id/"));
-                         p += wcslen(dst);
-                         MultiByteToWideChar(CP_UNIXCP, 0, data, -1, p, filename_len);
-                         ret = image_check_debug_link_gnu_id(dst, fmap_link, id, idlen);
-@@ -753,9 +753,9 @@
-     fmap_link = HeapAlloc(GetProcessHeap(), 0, sizeof(*fmap_link));
-     if (!fmap_link) return FALSE;
- 
--    p = malloc(sizeof(L"/usr/lib/debug/.build-id/") +
-+    p = malloc(sizeof(L"@TERMUX_PREFIX@/lib/debug/.build-id/") +
-                (idlen * 2 + 1) * sizeof(WCHAR) + sizeof(L".debug"));
--    wcscpy(p, L"/usr/lib/debug/.build-id/");
-+    wcscpy(p, L"@TERMUX_PREFIX@/lib/debug/.build-id/");
-     z = p + wcslen(p);
-     if (idlen)
-     {
-diff -uNr a/dlls/msvcrt/tests/environ.c b/dlls/msvcrt/tests/environ.c
---- a/dlls/msvcrt/tests/environ.c
-+++ b/dlls/msvcrt/tests/environ.c
-@@ -41,7 +41,8 @@
-  "/lib/mingw32/3.4.2/;"
-  "/lib/;"
-  "/usr/lib/mingw32/3.4.2/;"
-- "/usr/lib/";
-+ "/usr/lib/;"
-+ "@TERMUX_PREFIX@/lib/";
- 
- static char ***(__cdecl *p__p__environ)(void);
- static WCHAR ***(__cdecl *p__p__wenviron)(void);
-diff -uNr a/dlls/ntdll/unix/server.c b/dlls/ntdll/unix/server.c
---- a/dlls/ntdll/unix/server.c
-+++ b/dlls/ntdll/unix/server.c
-@@ -1113,15 +1113,15 @@
-     char *p, *dir;
-     size_t len = sizeof("/server-") + 2 * sizeof(dev) + 2 * sizeof(ino) + 2;
- 
--#ifdef __ANDROID__  /* there's no /tmp dir on Android */
-+#if defined(__ANDROID__) && ! defined(__TERMUX__)  /* there's no /tmp dir on Android */
-     len += strlen( config_dir ) + sizeof("/.wineserver");
-     dir = malloc( len );
-     strcpy( dir, config_dir );
-     strcat( dir, "/.wineserver/server-" );
- #else
--    len += sizeof("/tmp/.wine-") + 12;
-+    len += sizeof("@TERMUX_PREFIX@/tmp/.wine-") + 12;
-     dir = malloc( len );
--    sprintf( dir, "/tmp/.wine-%u/server-", getuid() );
-+    sprintf( dir, "@TERMUX_PREFIX@/tmp/.wine-%u/server-", getuid() );
+     if (!ret && !strchrW(filename, '/'))
+diff -uNr wine-5.1/libs/wine/config.c wine-5.1.mod/libs/wine/config.c
+--- wine-5.1/libs/wine/config.c	2020-02-03 02:55:00.000000000 +0800
++++ wine-5.1.mod/libs/wine/config.c	2022-08-11 12:38:01.061987601 +0800
+@@ -42,8 +42,8 @@
  #endif
-     p = dir + strlen( dir );
-     if (dev != (unsigned long)dev)
-diff -uNr a/libs/wine/config.c b/libs/wine/config.c
---- a/libs/wine/config.c
-+++ b/libs/wine/config.c
-@@ -342,7 +342,7 @@
- }
+ #include "wine/library.h"
  
- static const char server_config_dir[] = "/.wine";        /* config dir relative to $HOME */
+-static const char server_config_dir[] = "/.wine";        /* config dir relative to $HOME */
 -static const char server_root_prefix[] = "/tmp/.wine";   /* prefix for server root dir */
++static const char server_config_dir[] = "@TERMUX_HOME@/.wine";        /* config dir relative to $HOME */
 +static const char server_root_prefix[] = "@TERMUX_PREFIX@/tmp/.wine";   /* prefix for server root dir */
  static const char server_dir_prefix[] = "/server-";      /* prefix for server dir */
  
- static char *config_dir;
-@@ -382,7 +382,7 @@
- {
-     char *p, *root;
- 
--#ifdef __ANDROID__  /* there's no /tmp dir on Android */
-+#if defined(__ANDROID__) && ! defined(__TERMUX__)  /* there's no /tmp dir on Android */
-     root = build_path( config_dir, ".wineserver" );
- #else
-     root = xmalloc( sizeof(server_root_prefix) + 12 );
-diff -uNr a/programs/winebrowser/main.c b/programs/winebrowser/main.c
---- a/programs/winebrowser/main.c
-+++ b/programs/winebrowser/main.c
-@@ -116,6 +116,7 @@
- {
-     static const WCHAR defaultbrowsers[] =
-         L"xdg-open\0"
-+        "@TERMUX_PREFIX@/bin/open\0"
-         "/usr/bin/open\0"
-         "firefox\0"
-         "konqueror\0"
-@@ -141,7 +142,8 @@
- static int open_mailto_url( const WCHAR *url )
- {
-     static const WCHAR defaultmailers[] =
--        L"/usr/bin/open\0"
-+        L"@TERMUX_PREFIX@/bin/open"
-+        "/usr/bin/open\0"
-         "xdg-email\0"
-         "mozilla-thunderbird\0"
-         "thunderbird\0"
-diff -uNr a/programs/winemenubuilder/winemenubuilder.c b/programs/winemenubuilder/winemenubuilder.c
---- a/programs/winemenubuilder/winemenubuilder.c
-+++ b/programs/winemenubuilder/winemenubuilder.c
-@@ -1708,7 +1708,7 @@
-     if (_wgetenv( L"XDG_DATA_DIRS" ))
-         dirs = xwcsdup( _wgetenv( L"XDG_DATA_DIRS" ));
-     else
--        dirs = xwcsdup( L"/usr/local/share/:/usr/share/" );
-+        dirs = xwcsdup( L"@TERMUX_PREFIX@/share:/usr/local/share/:/usr/share/" );
- 
-     ret = add_mimes(xdg_data_dir, mime_types);
-     if (ret)
-diff -uNr a/server/request.c b/server/request.c
---- a/server/request.c
-+++ b/server/request.c
-@@ -657,15 +657,15 @@
+ static char *bindir;
+diff -uNr wine-5.1/server/request.c wine-5.1.mod/server/request.c
+--- wine-5.1/server/request.c	2020-02-03 02:55:00.000000000 +0800
++++ wine-5.1.mod/server/request.c	2022-08-11 12:41:26.971987523 +0800
+@@ -662,15 +662,15 @@
  
      /* create the base directory if needed */
  
 -#ifdef __ANDROID__  /* there's no /tmp dir on Android */
-+#if defined(__ANDROID__) && ! defined(__TERMUX__)  /* there's no /tmp dir on Android */
++#ifdef __ANDROID__  && ! defined(__TERMUX__)/* there's no /tmp dir on Android */
      len += strlen( config_dir ) + sizeof("/.wineserver");
      if (!(server_dir = malloc( len ))) fatal_error( "out of memory\n" );
      strcpy( server_dir, config_dir );
