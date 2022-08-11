@@ -21,4 +21,5 @@ termux_step_host_build () {
 
 termux_step_pre_configure() {
    LDFLAGS+=" -landroid-shmem"
+   alias ar=$TERMUX_PREFIX/bin/ar
 }
