@@ -11,7 +11,8 @@ PACKAGES+=" python-is-python3"
 
 # Used by build-package.sh and CI/CD scripts.
 PACKAGES+=" curl"
-PACKAGES+=" libfreetype"
+PACKAGES+=" libfreetype:i386"
+PACKAGES+=" libfreetype:amd64"
 PACKAGES+=" gnupg"
 
 # Used for fetching package sources from Git repositories.
@@ -266,6 +267,7 @@ fi
 
 # Allow 32-bit packages.
 $SUDO dpkg --add-architecture i386
+$SUDO dpkg --add-architecture amd64
 # Add ppa repo to be able to get openjdk-17 on ubuntu 22.04
 $SUDO cp $(dirname "$(realpath "$0")")/openjdk-r-ppa.gpg /etc/apt/trusted.gpg.d/
 echo "deb https://ppa.launchpadcontent.net/openjdk-r/ppa/ubuntu/ jammy main" | $SUDO tee /etc/apt/sources.list.d/openjdk-r-ubuntu-ppa-jammy.list > /dev/null
