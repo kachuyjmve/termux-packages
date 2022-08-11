@@ -7,12 +7,12 @@ TERMUX_PKG_BUILD_IN_SRC=true
 TERMUX_PKG_LICENSE="custom"
 TERMUX_PKG_LICENSE_FILE="LICENSE, COPYING-LIB"
 TERMUX_PKG_MAINTAINER="@termux"
-TERMUX_PKG_DEPENDS="ncurses, libpng, libjpeg-turbo, libx11, xorg-util-macros, libxaw, libxt, libxml2, libxslt, libandroid-shmem, libandroid-shmem-static, freetype, freetype-static"
+TERMUX_PKG_DEPENDS="ncurses, libpng, libjpeg-turbo, libx11, xorg-util-macros, libxaw, libxt, libxml2, libxslt, libandroid-shmem, libandroid-shmem-static, freetype, freetype-static, binutils"
 TERMUX_PKG_HOSTBUILD=true
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="enable_wineandroid_drv=no exec_prefix=$TERMUX_PREFIX --without-x --without-pcap --with-freetype --disable-tests --enable-nls --with-wine-tools=$TERMUX_PKG_HOSTBUILD_DIR"
 
 env -i PATH="$PATH" sudo apt update -y
-env -i PATH="$PATH" sudo apt install -y libfreetype-dev:i386 libfreetype-dev
+env -i PATH="$PATH" sudo apt install -y libfreetype-dev:i386 libfreetype-dev binutils*
 
 termux_step_host_build () {
    $TERMUX_PKG_SRCDIR/configure --without-x --without-pcap --with-freetype --disable-tests --enable-nls || cat config.log
