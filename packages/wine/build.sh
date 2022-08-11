@@ -14,6 +14,7 @@ env -i PATH="$PATH" sudo apt update -y
 env -i PATH="$PATH" sudo apt install -y libfreetype-dev:i386 libfreetype-dev binutils*
 
 termux_step_make () {
+   make tools
    make -j $TERMUX_MAKE_PROCESSES
 }
 
