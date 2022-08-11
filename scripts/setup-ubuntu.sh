@@ -11,8 +11,6 @@ PACKAGES+=" python-is-python3"
 
 # Used by build-package.sh and CI/CD scripts.
 PACKAGES+=" curl"
-PACKAGES+=" libfreetype-dev:i386"
-PACKAGES+=" libfreetype-dev:amd64"
 PACKAGES+=" gnupg"
 
 # Used for fetching package sources from Git repositories.
@@ -66,6 +64,10 @@ PACKAGES+=" python3.10-venv"
 
 # Needed by package bc.
 PACKAGES+=" ed"
+
+# Needed by package wine.
+PACKAGES+=" libfreetype-dev:i386"
+PACKAGES+=" libfreetype-dev:amd64"
 
 # Needed by gnunet.
 PACKAGES+=" recutils"
