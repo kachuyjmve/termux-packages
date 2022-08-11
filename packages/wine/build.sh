@@ -14,6 +14,6 @@ env -i PATH="$PATH" sudo apt update -y
 env -i PATH="$PATH" sudo apt install -y libfreetype-dev:i386 libfreetype-dev
 
 termux_step_host_build () {
-   $TERMUX_PKG_SRCDIR/configure --without-x --without-pcap --with-freetype --disable-tests || cat config.log
+   $TERMUX_PKG_SRCDIR/configure --without-x --without-pcap --with-freetype --disable-tests --with-wine-tools || cat config.log
    make -j $TERMUX_MAKE_PROCESSES
 }
