@@ -10,7 +10,8 @@ TERMUX_PKG_MAINTAINER="@termux"
 TERMUX_PKG_DEPENDS="ncurses, libpng, libjpeg-turbo, libx11, xorg-util-macros, libxaw, libxt, libxml2, libxslt, libandroid-shmem, libandroid-shmem-static, freetype, freetype-static"
 TERMUX_PKG_HOSTBUILD=true
 
-env -i PATH="$PATH" sudo apt install -y libfreetype:i386 libfreetype
+env -i PATH="$PATH" sudo apt update -y
+env -i PATH="$PATH" sudo apt install -y libfreetype-dev:i386 libfreetype-dev
 
 termux_step_host_build () {
    $TERMUX_PKG_SRCDIR/configure --without-x --without-pcap --with-freetype --disable-tests || cat config.log
