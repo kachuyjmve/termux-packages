@@ -68,6 +68,7 @@ PACKAGES+=" ed"
 # Needed by package wine.
 PACKAGES+=" libfreetype-dev:i386"
 PACKAGES+=" libfreetype-dev:amd64"
+PACKAGES+=" libc6-dev"
 
 # Needed by gnunet.
 PACKAGES+=" recutils"
