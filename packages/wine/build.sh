@@ -11,7 +11,6 @@ TERMUX_PKG_DEPENDS="ncurses, libpng, libjpeg-turbo, libx11, xorg-util-macros, li
 TERMUX_PKG_HOSTBUILD=true
 
 termux_step_host_build () {
-   $TERMUX_PKG_SRCDIR/configure --without-x --disable-nls --without-pcap --with-freetype --disable-tests LDFLAGS="-l$TERMUX_PREFIX/include/freetype2/freetype/"
-   cat config.log
+   $TERMUX_PKG_SRCDIR/configure --without-x --without-pcap --with-freetype --disable-tests LDFLAGS="-l$TERMUX_PREFIX/include/freetype2/freetype/" || cat config.log
    make -j8
 }
