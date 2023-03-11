@@ -7,3 +7,4 @@ TERMUX_PKG_GIT_BRANCH=master
 TERMUX_PKG_VERSION="2022.12.02"
 TERMUX_PKG_SRCURL="git+https://github.com/openscenegraph/OpenSceneGraph.git"
 TERMUX_PKG_BUILD_IN_SRC=true
+TERMUX_PKG_DEPENDS="opengl, libglvnd-dev, libglvnd"
