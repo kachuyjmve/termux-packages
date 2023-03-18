@@ -1,0 +1,30 @@
+diff -uNr cyberduck-release-8-5-6/cli/linux/pom.xml cyberduck-release-8-5-6.mod/cli/linux/pom.xml
+--- cyberduck-release-8-5-6/cli/linux/pom.xml	2023-02-17 21:57:42.000000000 +0800
++++ cyberduck-release-8-5-6.mod/cli/linux/pom.xml	2023-03-22 13:04:46.583998933 +0800
+@@ -31,7 +31,8 @@
+             <id>linux</id>
+             <activation>
+                 <os>
+-                    <family>Linux</family>
++			<family>Linux</family>
++			<arch>TERMUX_ARCH</arch>
+                 </os>
+             </activation>
+             <build>
+diff -uNr cyberduck-release-8-5-6/pom.xml cyberduck-release-8-5-6.mod/pom.xml
+--- cyberduck-release-8-5-6/pom.xml	2023-02-17 21:57:42.000000000 +0800
++++ cyberduck-release-8-5-6.mod/pom.xml	2023-03-22 13:02:24.103998987 +0800
+@@ -60,13 +60,8 @@
+         <!-- Test -->
+         <module>test</module>
+         <!-- Platforms -->
+-        <module>osx</module>
+-        <module>windows</module>
+         <module>cli</module>
+-        <module>cli/dll</module>
+         <module>cli/linux</module>
+-        <module>cli/windows</module>
+-        <module>cli/osx</module>
+     </modules>
+ 
+     <scm>
