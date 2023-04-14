@@ -1,0 +1,12 @@
+diff -uNr qtbase-everywhere-src-6.5.0/src/tools/moc/generator.cpp qtbase-everywhere-src-6.5.0.mod/src/tools/moc/generator.cpp
+--- qtbase-everywhere-src-6.5.0/src/tools/moc/generator.cpp	2023-03-14 16:29:43.000000000 +0800
++++ qtbase-everywhere-src-6.5.0.mod/src/tools/moc/generator.cpp	2023-04-14 19:28:03.879998519 +0800
+@@ -18,6 +18,8 @@
+ #include <math.h>
+ #include <stdio.h>
+ 
++#include <limits>
++
+ #include <private/qmetaobject_p.h> //for the flags.
+ #include <private/qplugin_p.h> //for the flags.
+ 

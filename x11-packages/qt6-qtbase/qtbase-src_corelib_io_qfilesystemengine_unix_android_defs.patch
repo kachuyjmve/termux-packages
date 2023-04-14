@@ -1,0 +1,48 @@
+diff -uNr qtbase-everywhere-src-6.5.0/src/corelib/io/qfilesystemengine_unix.cpp qtbase-everywhere-src-6.5.0.mod/src/corelib/io/qfilesystemengine_unix.cpp
+--- qtbase-everywhere-src-6.5.0/src/corelib/io/qfilesystemengine_unix.cpp	2023-03-14 16:29:43.000000000 +0800
++++ qtbase-everywhere-src-6.5.0.mod/src/corelib/io/qfilesystemengine_unix.cpp	2023-04-14 19:01:23.579999129 +0800
+@@ -65,7 +65,7 @@
+ #endif
+ #endif
+ 
+-#if defined(Q_OS_ANDROID)
++#if defined(Q_OS_ANDROID) || defined(__ANDROID__)
+ // statx() is disabled on Android because quite a few systems
+ // come with sandboxes that kill applications that make system calls outside a
+ // whitelist and several Android vendors can't be bothered to update the list.
+@@ -81,7 +81,7 @@
+ using namespace Qt::StringLiterals;
+ 
+ enum {
+-#ifdef Q_OS_ANDROID
++#ifdef Q_OS_ANDROID || defined(__ANDROID__)
+     // On Android, the link(2) system call has been observed to always fail
+     // with EACCES, regardless of whether there are permission problems or not.
+     SupportsHardlinking = false
+@@ -305,7 +305,7 @@
+ 
+     // Times
+     auto toMSecs = [](struct statx_timestamp ts)
+-    {
++    
+         return qint64(ts.tv_sec) * 1000 + (ts.tv_nsec / 1000000);
+     };
+     accessTime_ = toMSecs(statxBuffer.stx_atime);
+@@ -638,7 +638,7 @@
+ # endif
+     };
+     std::unique_ptr<char, decltype (resolved_path_deleter)> resolved_name {nullptr, resolved_path_deleter};
+-# if defined(Q_OS_DARWIN) || defined(Q_OS_ANDROID)
++# if defined(Q_OS_DARWIN) || defined(Q_OS_ANDROID) || defined(__ANDROID__)
+     // On some Android and macOS versions, realpath() will return a path even if
+     // it does not exist. To work around this, we check existence in advance.
+     if (!data.hasFlags(QFileSystemMetaData::ExistsAttribute))
+@@ -769,7 +769,7 @@
+ 
+ #if !defined(Q_OS_INTEGRITY) && !defined(Q_OS_WASM)
+     struct group *gr = nullptr;
+-#if QT_CONFIG(thread) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_OPENBSD) && !defined(Q_OS_VXWORKS) && (!defined(Q_OS_ANDROID) || defined(Q_OS_ANDROID) && (__ANDROID_API__ >= 24))
++#if QT_CONFIG(thread) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_OPENBSD) && !defined(Q_OS_VXWORKS) && (!defined(Q_OS_ANDROID) || defined(Q_OS_ANDROID) && (__ANDROID_API__ >= 24)) || defined(__ANDROID__)
+     size_max = sysconf(_SC_GETGR_R_SIZE_MAX);
+     if (size_max == -1)
+         size_max = 1024;

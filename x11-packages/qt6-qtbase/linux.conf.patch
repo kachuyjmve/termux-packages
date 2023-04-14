@@ -1,0 +1,11 @@
+diff -uNr qtbase-everywhere-src-6.5.0/mkspecs/common/linux.conf qtbase-everywhere-src-6.5.0.mod/mkspecs/common/linux.conf
+--- qtbase-everywhere-src-6.5.0/mkspecs/common/linux.conf	2023-03-14 16:29:43.000000000 +0800
++++ qtbase-everywhere-src-6.5.0.mod/mkspecs/common/linux.conf	2023-04-14 18:44:46.519999510 +0800
+@@ -28,6 +28,7 @@
+ 
+ QMAKE_LIBS              =
+ QMAKE_LIBS_DYNLOAD      = -ldl
++QMAKE_LIBS_EXECINFO     = -lexecinfo
+ QMAKE_LIBS_X11          = -lXext -lX11 -lm
+ QMAKE_LIBS_EGL          = -lEGL
+ QMAKE_LIBS_OPENGL       = -lGL

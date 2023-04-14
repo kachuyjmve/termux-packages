@@ -1,0 +1,12 @@
+diff -uNr qtbase-everywhere-src-6.5.0/src/corelib/global/qsystemdetection.h qtbase-everywhere-src-6.5.0.mod/src/corelib/global/qsystemdetection.h
+--- qtbase-everywhere-src-6.5.0/src/corelib/global/qsystemdetection.h	2023-03-14 16:29:43.000000000 +0800
++++ qtbase-everywhere-src-6.5.0.mod/src/corelib/global/qsystemdetection.h	2023-04-14 19:09:39.399998940 +0800
+@@ -85,7 +85,7 @@
+ #  define Q_OS_WEBOS
+ #  define Q_OS_LINUX
+ #elif defined(__ANDROID__) || defined(ANDROID)
+-#  define Q_OS_ANDROID
++#  define Q_OS_ANDROID_EMBEDDED
+ #  define Q_OS_LINUX
+ #elif defined(__CYGWIN__)
+ #  define Q_OS_CYGWIN
