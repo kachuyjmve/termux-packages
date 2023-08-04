@@ -1,0 +1,22 @@
+diff -uNr libxslt-1.1.38/python/setup.py.in libxslt-1.1.38.mod/python/setup.py.in
+--- libxslt-1.1.38/python/setup.py.in	2023-02-26 21:08:59.000000000 +0800
++++ libxslt-1.1.38.mod/python/setup.py.in	2023-08-06 09:36:32.700261418 +0800
+@@ -42,9 +42,7 @@
+ # those are examined to find
+ # - libxslt/xsltconfig.h
+ includes_dir = [
+-"/usr/include",
+-"/usr/local/include",
+-"/opt/include",
++"@TERMUX_PREFIX@/include",
+ os.path.join(ROOT,'include'),
+ HOME
+ ];
+@@ -52,6 +50,7 @@
+ # those are added in the linker search path for libraries
+ libdirs = [
+ os.path.join(ROOT,'lib'),
++"@TERMUX_PREFIX@/lib",
+ ]
+ 
+ xslt_files = ["libxslt-api.xml", "libxslt-python-api.xml",
