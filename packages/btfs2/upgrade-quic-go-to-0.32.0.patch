@@ -1,0 +1,90 @@
+diff -uNr go-btfs-btfs-v2.3.2/docs/examples/go-ipfs-as-a-library/go.sum go-btfs-btfs-v2.3.2.mod/docs/examples/go-ipfs-as-a-library/go.sum
+--- go-btfs-btfs-v2.3.2/docs/examples/go-ipfs-as-a-library/go.sum	2023-06-26 14:40:24.000000000 +0800
++++ go-btfs-btfs-v2.3.2.mod/docs/examples/go-ipfs-as-a-library/go.sum	2023-08-12 16:13:20.427683047 +0800
+@@ -1220,12 +1220,8 @@
+ github.com/lightstep/lightstep-tracer-common/golang/gogo v0.0.0-20190605223551-bc2310a04743/go.mod h1:qklhhLq1aX+mtWk9cPHPzaBjWImj5ULL6C7HFJtXQMM=
+ github.com/lightstep/lightstep-tracer-go v0.18.1/go.mod h1:jlF1pusYV4pidLvZ+XD0UBX0ZE6WURAspgAczcDHrL4=
+ github.com/looplab/fsm v0.1.0/go.mod h1:m2VaOfDHxqXBBMgc26m6yUOwkFn8H2AlJDE+jd/uafI=
+-github.com/lucas-clemente/quic-go v0.16.0/go.mod h1:I0+fcNTdb9eS1ZcjQZbDVPGchJ86chcIxPALn9lEJqE=
+-github.com/lucas-clemente/quic-go v0.17.3 h1:jMX/MmDNCljfisgMmPGUcBJ+zUh9w3d3ia4YJjYS3TM=
+-github.com/lucas-clemente/quic-go v0.17.3/go.mod h1:I0+fcNTdb9eS1ZcjQZbDVPGchJ86chcIxPALn9lEJqE=
+-github.com/lucas-clemente/quic-go v0.18.0 h1:JhQDdqxdwdmGdKsKgXi1+coHRoGhvU6z0rNzOJqZ/4o=
+-github.com/lucas-clemente/quic-go v0.18.0/go.mod h1:yXttHsSNxQi8AWijC/vLP+OJczXqzHSOcJrM5ITUlCg=
+-github.com/lucas-clemente/quic-go v0.19.3/go.mod h1:ADXpNbTQjq1hIzCpB+y/k5iz4n4z4IwqoLb94Kh5Hu8=
++github.com/quic-go/quic-go v0.32.0 h1:lY02md31s1JgPiiyfqJijpu/UX/Iun304FI3yUqX7tA=
++github.com/quic-go/quic-go v0.32.0/go.mod h1:/fCsKANhQIeD5l76c2JFU+07gVE3KaA0FP+0zMWwfwo=
+ github.com/lunixbochs/vtclean v1.0.0/go.mod h1:pHhQNgMf3btfWnGBVipUOjRYhoOsdGqdm/+2c2E2WMI=
+ github.com/lyft/protoc-gen-validate v0.0.13/go.mod h1:XbGvPuh87YZc5TdIa2/I4pLk0QoUACkjt2znoq26NVQ=
+ github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
+diff -uNr go-btfs-btfs-v2.3.2/go.mod go-btfs-btfs-v2.3.2.mod/go.mod
+--- go-btfs-btfs-v2.3.2/go.mod	2023-06-26 14:40:24.000000000 +0800
++++ go-btfs-btfs-v2.3.2.mod/go.mod	2023-08-12 15:53:51.532071623 +0800
+@@ -185,8 +185,9 @@
+ 	github.com/libp2p/zeroconf/v2 v2.2.0 // indirect
+ 	github.com/lispad/go-generics-tools v1.1.0 // indirect
+ 	github.com/marten-seemann/qpack v0.3.0 // indirect
+-	github.com/marten-seemann/qtls-go1-18 v0.1.3 // indirect
+-	github.com/marten-seemann/qtls-go1-19 v0.1.1 // indirect
++	github.com/quic-go/qtls-go1-18 v0.2.0 // indirect
++	github.com/quic-go/qtls-go1-19 v0.2.0 // indirect
++	github.com/quic-go/qtls-go1-20 v0.1.0 // indirect
+ 	github.com/marten-seemann/webtransport-go v0.4.3 // indirect
+ 	github.com/mattn/go-pointer v0.0.1 // indirect
+ 	github.com/mr-tron/base58 v1.2.0 // indirect
+@@ -299,7 +300,7 @@
+ 	github.com/libp2p/go-netroute v0.2.1 // indirect
+ 	github.com/libp2p/go-openssl v0.1.0 // indirect
+ 	github.com/libp2p/go-reuseport v0.2.0 // indirect
+-	github.com/lucas-clemente/quic-go v0.31.1 // indirect
++	github.com/quic-go/quic-go v0.32.0 // indirect
+ 	github.com/marten-seemann/tcp v0.0.0-20210406111302-dfbc87cc63fd // indirect
+ 	github.com/mattn/go-colorable v0.1.13 // indirect
+ 	github.com/mattn/go-isatty v0.0.17 // indirect
+diff -uNr go-btfs-btfs-v2.3.2/go.sum go-btfs-btfs-v2.3.2.mod/go.sum
+--- go-btfs-btfs-v2.3.2/go.sum	2023-06-26 14:40:24.000000000 +0800
++++ go-btfs-btfs-v2.3.2.mod/go.sum	2023-08-12 15:55:59.704600062 +0800
+@@ -1154,9 +1154,8 @@
+ github.com/lispad/go-generics-tools v1.1.0/go.mod h1:2csd1EJljo/gy5qG4khXol7ivCPptNjG5Uv2X8MgK84=
+ github.com/looplab/fsm v0.1.0 h1:Qte7Zdn/5hBNbXzP7yxVU4OIFHWXBovyTT2LaBTyC20=
+ github.com/looplab/fsm v0.1.0/go.mod h1:m2VaOfDHxqXBBMgc26m6yUOwkFn8H2AlJDE+jd/uafI=
+-github.com/lucas-clemente/quic-go v0.19.3/go.mod h1:ADXpNbTQjq1hIzCpB+y/k5iz4n4z4IwqoLb94Kh5Hu8=
+-github.com/lucas-clemente/quic-go v0.31.1 h1:O8Od7hfioqq0PMYHDyBkxU2aA7iZ2W9pjbrWuja2YR4=
+-github.com/lucas-clemente/quic-go v0.31.1/go.mod h1:0wFbizLgYzqHqtlyxyCaJKlE7bYgE6JQ+54TLd/Dq2g=
++github.com/quic-go/quic-go v0.32.0 h1:lY02md31s1JgPiiyfqJijpu/UX/Iun304FI3yUqX7tA=
++github.com/quic-go/quic-go v0.32.0/go.mod h1:/fCsKANhQIeD5l76c2JFU+07gVE3KaA0FP+0zMWwfwo=
+ github.com/lunixbochs/vtclean v1.0.0/go.mod h1:pHhQNgMf3btfWnGBVipUOjRYhoOsdGqdm/+2c2E2WMI=
+ github.com/lyft/protoc-gen-validate v0.0.13/go.mod h1:XbGvPuh87YZc5TdIa2/I4pLk0QoUACkjt2znoq26NVQ=
+ github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
+@@ -1170,11 +1169,12 @@
+ github.com/marten-seemann/qpack v0.3.0 h1:UiWstOgT8+znlkDPOg2+3rIuYXJ2CnGDkGUXN6ki6hE=
+ github.com/marten-seemann/qpack v0.3.0/go.mod h1:cGfKPBiP4a9EQdxCwEwI/GEeWAsjSekBvx/X8mh58+g=
+ github.com/marten-seemann/qtls v0.10.0/go.mod h1:UvMd1oaYDACI99/oZUYLzMCkBXQVT0aGm99sJhbT8hs=
+-github.com/marten-seemann/qtls-go1-15 v0.1.1/go.mod h1:GyFwywLKkRt+6mfU99csTEY1joMZz5vmB1WNZH3P81I=
+-github.com/marten-seemann/qtls-go1-18 v0.1.3 h1:R4H2Ks8P6pAtUagjFty2p7BVHn3XiwDAl7TTQf5h7TI=
+-github.com/marten-seemann/qtls-go1-18 v0.1.3/go.mod h1:mJttiymBAByA49mhlNZZGrH5u1uXYZJ+RW28Py7f4m4=
+-github.com/marten-seemann/qtls-go1-19 v0.1.1 h1:mnbxeq3oEyQxQXwI4ReCgW9DPoPR94sNlqWoDZnjRIE=
+-github.com/marten-seemann/qtls-go1-19 v0.1.1/go.mod h1:5HTDWtVudo/WFsHKRNuOhWlbdjrfs5JHrYb0wIJqGpI=
++github.com/quic-go/qtls-go1-18 v0.2.0 h1:5ViXqBZ90wpUcZS0ge79rf029yx0dYB0McyPJwqqj7U=
++github.com/quic-go/qtls-go1-18 v0.2.0/go.mod h1:moGulGHK7o6O8lSPSZNoOwcLvJKJ85vVNc7oJFD65bc=
++github.com/quic-go/qtls-go1-19 v0.2.0 h1:Cvn2WdhyViFUHoOqK52i51k4nDX8EwIh5VJiVM4nttk=
++github.com/quic-go/qtls-go1-19 v0.2.0/go.mod h1:ySOI96ew8lnoKPtSqx2BlI5wCpUVPT05RMAlajtnyOI=
++github.com/quic-go/qtls-go1-20 v0.1.0 h1:d1PK3ErFy9t7zxKsG3NXBJXZjp/kMLoIb3y/kV54oAI=
++github.com/quic-go/qtls-go1-20 v0.1.0/go.mod h1:JKtK6mjbAVcUTN/9jZpvLbGxvdWIKS8uT7EiStoU1SM=
+ github.com/marten-seemann/tcp v0.0.0-20210406111302-dfbc87cc63fd h1:br0buuQ854V8u83wA0rVZ8ttrq5CpaPZdvrK0LP2lOk=
+ github.com/marten-seemann/tcp v0.0.0-20210406111302-dfbc87cc63fd/go.mod h1:QuCEs1Nt24+FYQEqAAncTDPJIuGs+LxK1MCiFL25pMU=
+ github.com/marten-seemann/webtransport-go v0.4.3 h1:vkt5o/Ci+luknRteWdYGYH1KcB7ziup+J+1PzZJIvmg=
+diff -uNr go-btfs-btfs-v2.3.2/test/dependencies/go.sum go-btfs-btfs-v2.3.2.mod/test/dependencies/go.sum
+--- go-btfs-btfs-v2.3.2/test/dependencies/go.sum	2023-06-26 14:40:24.000000000 +0800
++++ go-btfs-btfs-v2.3.2.mod/test/dependencies/go.sum	2023-08-12 16:12:37.787683063 +0800
+@@ -638,9 +638,8 @@
+ github.com/libp2p/go-yamux v1.3.7 h1:v40A1eSPJDIZwz2AvrV3cxpTZEGDP11QJbukmEhYyQI=
+ github.com/libp2p/go-yamux v1.3.7/go.mod h1:fr7aVgmdNGJK+N1g+b6DW6VxzbRCjCOejR/hkmpooHE=
+ github.com/logrusorgru/aurora v0.0.0-20181002194514-a7b3b318ed4e/go.mod h1:7rIyQOR62GCctdiQpZ/zOJlFyk6y+94wXzv6RNZgaR4=
+-github.com/lucas-clemente/quic-go v0.11.2/go.mod h1:PpMmPfPKO9nKJ/psF49ESTAGQSdfXxlg1otPbEB2nOw=
+-github.com/lucas-clemente/quic-go v0.15.7 h1:Pu7To5/G9JoP1mwlrcIvfV8ByPBlCzif3MCl8+1W83I=
+-github.com/lucas-clemente/quic-go v0.15.7/go.mod h1:Myi1OyS0FOjL3not4BxT7KN29bRkcMUV5JVVFLKtDp8=
++github.com/quic-go/quic-go v0.32.0 h1:lY02md31s1JgPiiyfqJijpu/UX/Iun304FI3yUqX7tA=
++github.com/quic-go/quic-go v0.32.0/go.mod h1:/fCsKANhQIeD5l76c2JFU+07gVE3KaA0FP+0zMWwfwo=
+ github.com/lunixbochs/vtclean v1.0.0/go.mod h1:pHhQNgMf3btfWnGBVipUOjRYhoOsdGqdm/+2c2E2WMI=
+ github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
+ github.com/magiconair/properties v1.8.1 h1:ZC2Vc7/ZFkGmsVC9KvOjumD+G5lXy2RtTKyzRKO2BQ4=
