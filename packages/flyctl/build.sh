@@ -7,6 +7,7 @@ TERMUX_PKG_SRCURL=https://github.com/superfly/flyctl/archive/v$TERMUX_PKG_VERSIO
 TERMUX_PKG_SHA256=16d2ea2b0a7d9c7bfb1e4834020241b4802250e0457ad3ddfebe5f852bef97da
 TERMUX_PKG_AUTO_UPDATE=true
 TERMUX_PKG_BUILD_IN_SRC=true
+TERMUX_PKG_GO_USE_OLDER=true
 TERMUX_PKG_BLACKLISTED_ARCHES="i686, arm"
 
 
@@ -14,6 +15,7 @@ termux_step_post_get_source() {
 	termux_setup_golang
 	export GOPATH=$TERMUX_PKG_SRCDIR/go
 	export GOOS="android"
+	go env
 	go get
 	chmod +w $GOPATH -R
 }
