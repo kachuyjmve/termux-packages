@@ -14,6 +14,7 @@ termux_step_post_get_source() {
 	termux_setup_golang
 	export GOPATH=$TERMUX_PKG_SRCDIR/go
 	export GOOS="android"
+ 	go env
 	go get
 	chmod +w $GOPATH -R
 }
