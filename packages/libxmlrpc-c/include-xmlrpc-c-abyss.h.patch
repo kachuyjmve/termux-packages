@@ -1,0 +1,12 @@
+diff -uNr xmlrpc-c-1.54.06/include/xmlrpc-c/abyss.h xmlrpc-c-1.54.06.mod/include/xmlrpc-c/abyss.h
+--- xmlrpc-c-1.54.06/include/xmlrpc-c/abyss.h	2019-03-29 11:33:33.000000000 +0800
++++ xmlrpc-c-1.54.06.mod/include/xmlrpc-c/abyss.h	2023-08-16 09:48:09.234523296 +0800
+@@ -630,7 +630,7 @@
+ #ifdef __rtems__
+ #define DEFAULT_ROOT        "/abyss"
+ #else
+-#define DEFAULT_ROOT        "/usr/local/abyss"
++#define DEFAULT_ROOT        "@TERMUX_PREFIX@/etc/abyss"
+ #endif
+ #define DEFAULT_DOCS        DEFAULT_ROOT"/htdocs"
+ #define DEFAULT_CONF_FILE   DEFAULT_ROOT"/conf/abyss.conf"

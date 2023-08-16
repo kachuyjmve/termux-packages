@@ -1,0 +1,83 @@
+diff -uNr xmlrpc-c-1.54.06/include/xmlrpc-c/girmem.hpp xmlrpc-c-1.54.06.mod/include/xmlrpc-c/girmem.hpp
+--- xmlrpc-c-1.54.06/include/xmlrpc-c/girmem.hpp	2019-03-29 11:33:33.000000000 +0800
++++ xmlrpc-c-1.54.06.mod/include/xmlrpc-c/girmem.hpp	2023-08-16 09:32:07.974523663 +0800
+@@ -42,7 +42,7 @@
+ private:
+     class Impl;
+ 
+-    std::auto_ptr<Impl> const implP;
++    std::unique_ptr<Impl> const implP;
+ 
+     // Because of 'implP', we cannot allow copy construction, so this is
+     // private:
+diff -uNr xmlrpc-c-1.54.06/lib/libutil++/girmem.cpp xmlrpc-c-1.54.06.mod/lib/libutil++/girmem.cpp
+--- xmlrpc-c-1.54.06/lib/libutil++/girmem.cpp	2019-03-29 11:33:33.000000000 +0800
++++ xmlrpc-c-1.54.06.mod/lib/libutil++/girmem.cpp	2023-08-16 09:34:09.074523616 +0800
+@@ -70,7 +70,7 @@
+  
+ 
+ 
+-autoObject::autoObject() : implP(auto_ptr<Impl>(new Impl)) {}
++autoObject::autoObject() : implP(unique_ptr<Impl>(new Impl)) {}
+ 
+ 
+ 
+diff -uNr xmlrpc-c-1.54.06/src/cpp/pstream.cpp xmlrpc-c-1.54.06.mod/src/cpp/pstream.cpp
+--- xmlrpc-c-1.54.06/src/cpp/pstream.cpp	2019-03-29 11:33:33.000000000 +0800
++++ xmlrpc-c-1.54.06.mod/src/cpp/pstream.cpp	2023-08-16 09:43:47.494523396 +0800
+@@ -135,11 +135,11 @@
+     if (!opt.present.fd)
+         throwf("You must provide a 'fd' constructor option.");
+ 
+-    auto_ptr<packetSocket> packetSocketAP;
++    unique_ptr<packetSocket> packetSocketAP;
+ 
+     try {
+-        auto_ptr<packetSocket> p(new packetSocket(opt.value.fd));
+-        packetSocketAP = p;
++        unique_ptr<packetSocket> p(new packetSocket(opt.value.fd));
++        packetSocketAP = std::move(p);
+     } catch (exception const& e) {
+         throwf("Unable to create packet socket out of file descriptor %d.  %s",
+                opt.value.fd, e.what());
+diff -uNr xmlrpc-c-1.54.06/src/cpp/server_cgi.cpp xmlrpc-c-1.54.06.mod/src/cpp/server_cgi.cpp
+--- xmlrpc-c-1.54.06/src/cpp/server_cgi.cpp	2018-06-26 09:47:58.000000000 +0800
++++ xmlrpc-c-1.54.06.mod/src/cpp/server_cgi.cpp	2023-08-16 09:40:52.514523462 +0800
+@@ -224,7 +224,7 @@
+ 
+     setModeBinary(fileP);
+     char * const buffer(new char[length]);
+-    auto_ptr<char> p(buffer);  // To make it go away when we leave
++    unique_ptr<char> p(buffer);  // To make it go away when we leave
+ 
+     size_t count;
+ 
+diff -uNr xmlrpc-c-1.54.06/src/cpp/server_pstream_conn.cpp xmlrpc-c-1.54.06.mod/src/cpp/server_pstream_conn.cpp
+--- xmlrpc-c-1.54.06/src/cpp/server_pstream_conn.cpp	2013-03-29 14:38:36.000000000 +0800
++++ xmlrpc-c-1.54.06.mod/src/cpp/server_pstream_conn.cpp	2023-08-16 09:43:05.954523412 +0800
+@@ -170,11 +170,11 @@
+     if (!opt.present.socketFd)
+         throwf("You must provide a 'socketFd' constructor option.");
+ 
+-    auto_ptr<packetSocket> packetSocketAP;
++    unique_ptr<packetSocket> packetSocketAP;
+ 
+     try {
+-        auto_ptr<packetSocket> p(new packetSocket(opt.value.socketFd));
+-        packetSocketAP = p;
++        unique_ptr<packetSocket> p(new packetSocket(opt.value.socketFd));
++        packetSocketAP = std::move(p);
+     } catch (exception const& e) {
+         throwf("Unable to create packet socket out of file descriptor %d.  %s",
+                opt.value.socketFd, e.what());
+diff -uNr xmlrpc-c-1.54.06/src/xmlrpc_data.c xmlrpc-c-1.54.06.mod/src/xmlrpc_data.c
+--- xmlrpc-c-1.54.06/src/xmlrpc_data.c	2019-03-29 11:33:33.000000000 +0800
++++ xmlrpc-c-1.54.06.mod/src/xmlrpc_data.c	2023-08-16 09:38:44.594523511 +0800
+@@ -534,6 +534,7 @@
+     return retval;
+ }
+ 
++extern int finite(double);
+ 
+ 
+ xmlrpc_value *
