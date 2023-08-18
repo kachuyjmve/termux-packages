@@ -1,0 +1,19 @@
+diff -uNr calc-2.14.3.5/Makefile.local calc-2.14.3.5.mod/Makefile.local
+--- calc-2.14.3.5/Makefile.local	2023-08-15 12:49:40.000000000 +0800
++++ calc-2.14.3.5.mod/Makefile.local	2023-08-18 09:24:28.864347480 +0800
+@@ -109,3 +109,15 @@
+ # LDFLAGS+= -Wno-invalid-command-line-argument ${FSANITIZE} -fno-omit-frame-pointer
+ # CALC_ENV+= ASAN_OPTIONS=detect_stack_use_after_return=1
+ ####
++PREFIX=@TERMUX_PREFIX@
++BINDIR=@TERMUX_PREFIX@/bin
++INCDIR=@TERMUX_PREFIX@/include
++LIBDIR=@TERMUX_PREFIX@/lib/calc
++CALC_SHAREDIR=@TERMUX_PREFIX@/lib/calc
++HELPDIR=@TERMUX_PREFIX@/lib/calc/help
++CALC_INCDIR=@TERMUX_PREFIX@/include/calc
++CUSTOMCALDIR=@TERMUX_PREFIX@/lib/calc/custom
++CUSTOMHELPDIR=@TERMUX_PREFIX@/lib/calc/help/custhelp
++CUSTOMINCDIR=@TERMUX_PREFIX@/lib/calc/custom
++SCRIPTDIR=@TERMUX_PREFIX@/bin/cscript
++MANDIR=@TERMUX_PREFIX@/share/man/man1
