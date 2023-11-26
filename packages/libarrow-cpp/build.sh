@@ -32,7 +32,10 @@ termux_step_pre_configure() {
 
 	CPPFLAGS+=" -DPROTOBUF_USE_DLLS"
 	LDFLAGS+=" -landroid-execinfo"
-	cat $TERMUX_PKG_SRCDIR/build/orc_ep-prefix/src/orc_ep-stamp/orc_ep-build-*.log
+}
+
+termux_step_post_configure() {
+	cat $TERMUX_PKG_SRCDIR/../build/orc_ep-prefix/src/orc_ep-stamp/orc_ep-build-*.log
 	echo -----------
-	cat $TERMUX_PKG_SRCDIR/build/orc_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
+	cat $TERMUX_PKG_SRCDIR/../build/orc_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
 }
