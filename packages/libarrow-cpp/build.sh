@@ -34,8 +34,8 @@ termux_step_pre_configure() {
 	LDFLAGS+=" -landroid-execinfo"
 }
 
-termux_step_post_make() {
+termux_step_make() {
 	cat /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/orc_ep-stamp/orc_ep-build-*.log
-	echo -----------
-	cat /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
+	echo -----------------
+	cat  /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/orc_ep-build/zlib_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
 }
