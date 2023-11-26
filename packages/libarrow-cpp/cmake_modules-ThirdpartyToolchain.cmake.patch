@@ -1,0 +1,11 @@
+diff -uNr arrow-apache-arrow-12.0.1/cpp/cmake_modules/ThirdpartyToolchain.cmake arrow-apache-arrow-12.0.1.mod/cpp/cmake_modules/ThirdpartyToolchain.cmake
+--- arrow-apache-arrow-12.0.1/cpp/cmake_modules/ThirdpartyToolchain.cmake	2023-06-07 22:45:55.000000000 +0800
++++ arrow-apache-arrow-12.0.1.mod/cpp/cmake_modules/ThirdpartyToolchain.cmake	2023-11-28 22:38:22.029701469 +0800
+@@ -2462,6 +2462,7 @@
+                       URL ${ZLIB_SOURCE_URL}
+                       URL_HASH "SHA256=${ARROW_ZLIB_BUILD_SHA256_CHECKSUM}"
+                       BUILD_BYPRODUCTS "${ZLIB_STATIC_LIB}"
++		      COMMAND sed '/gz_intmax/d' ${TERMUX_PKG_BUILDDIR}/orc_ep-prefix/src/orc_ep-build/zlib_ep-prefix/src/zlib_ep/zlib.map && cat ${TERMUX_PKG_BUILDDIR}/orc_ep-prefix/src/orc_ep-build/zlib_ep-prefix/src/zlib_ep/zlib.map
+                       CMAKE_ARGS ${ZLIB_CMAKE_ARGS})
+ 
+   file(MAKE_DIRECTORY "${ZLIB_PREFIX}/include")
