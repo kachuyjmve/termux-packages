@@ -35,7 +35,7 @@ termux_step_pre_configure() {
 }
 
 termux_step_post_configure() {
-	cat $TERMUX_PKG_SRCDIR/../build/orc_ep-prefix/src/orc_ep-stamp/orc_ep-build-*.log
+	cat /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/orc_ep-stamp/orc_ep-build-*.log
 	echo -----------
-	cat $TERMUX_PKG_SRCDIR/../build/orc_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
+	cat /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
 }
