@@ -20,6 +20,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 -DARROW_JEMALLOC=OFF
 -DARROW_JSON=ON
 -DARROW_ORC=ON
+-DARROW_ZSTD=SYSTEM
 -DARROW_PARQUET=ON
 -DARROW_RUNTIME_SIMD_LEVEL=NONE
 -DARROW_SIMD_LEVEL=NONE
@@ -32,11 +33,4 @@ termux_step_pre_configure() {
 
 	CPPFLAGS+=" -DPROTOBUF_USE_DLLS"
 	LDFLAGS+=" -landroid-execinfo"
-}
-
-termux_step_make() {
-	cmake $TERMUX_PKG_SRCDIR
-	cat /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/orc_ep-stamp/orc_ep-build-*.log
-	echo -----------------
-	cat  /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/orc_ep-build/zlib_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
 }
