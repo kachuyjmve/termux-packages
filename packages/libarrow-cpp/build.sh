@@ -35,6 +35,7 @@ termux_step_pre_configure() {
 }
 
 termux_step_make() {
+	cmake $TERMUX_PKG_SRCDIR/cpp/
 	cat /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/orc_ep-stamp/orc_ep-build-*.log
 	echo -----------------
 	cat  /home/builder/.termux-build/libarrow-cpp/build/orc_ep-prefix/src/orc_ep-build/zlib_ep-prefix/src/zlib_ep-stamp/zlib_ep-build-*.log
